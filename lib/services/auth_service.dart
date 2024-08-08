@@ -3,18 +3,15 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
-  final String _baseUrl = 'https://kehangjis.69dev.id/api';
+  final String _baseUrl = 'https://movieapi.smkassalaambandung.sch.id/api';
 
   Future<bool> login(String email, String password) async {
-    final response = await http.post(
-      Uri.parse('$_baseUrl/login'),
-      body: {'email': email, 'password': password},
-    );
-
+    final response = await http.post(Uri.parse('$_baseUrl/login'),
+        body: {'email': email, 'password': password});
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('token', data['token']);
+      prefs.setString('token', data['access_token']);
       return true;
     } else {
       return false;
@@ -26,8 +23,7 @@ class AuthService {
       Uri.parse('$_baseUrl/register'),
       body: {'name': name, 'email': email, 'password': password},
     );
-
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       return true;
     } else {
       return false;

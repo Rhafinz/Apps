@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
 import 'auth/login_page.dart';
+import 'kategori/list_page.dart';
 
 class HomePage extends StatelessWidget {
   final AuthService _authService = AuthService();
@@ -26,9 +27,24 @@ class HomePage extends StatelessWidget {
         ],
       ),
       body: Center(
-        child: Text(
-          'Welcome to the Home Page!',
-          style: TextStyle(fontSize: 24),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Welcome to Home Page',
+              style: TextStyle(fontSize: 24),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                  context,
+              MaterialPageRoute(builder: (context) => KategoriPage()),
+            );
+          },
+          child: Text('Kategori'),
+        ),
+          ],
         ),
       ),
     );
