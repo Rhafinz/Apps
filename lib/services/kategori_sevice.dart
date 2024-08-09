@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
 import '../models/kategori_model.dart';
 
 class KategoriSevice {
@@ -22,14 +21,26 @@ class KategoriSevice {
   }
 
   Future<bool> storeKategori(String namaKategori) async {
-    final reponse = await http.post(
+    final response = await http.post(
       Uri.parse('$_baseUrl/kategori'),
       body: {'nama_kategori': namaKategori},
     );
-    if (reponse.statusCode == 201) {
-      return true;
-    } else {
-      return false;
-    }
+
+    return response.statusCode == 201;
+  }
+
+  Future<bool> updateKategori(int id, String namaKategori) async {
+    final response = await http.put(
+      Uri.parse('$_baseUrl/kategori/$id'),
+      body: {'nama_kategori': namaKategori},
+    );
+
+    return response.statusCode == 200;
+  }
+
+  Future<bool> deleteKategori(int id) async {
+    final response = await http.delete(Uri.parse('$_baseUrl/kategori/$id'));
+
+    return response.statusCode == 200;
   }
 }
